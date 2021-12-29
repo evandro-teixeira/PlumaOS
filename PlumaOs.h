@@ -63,6 +63,7 @@
 
 void PlumaOS_Init(void);
 
-
+void PlumaOS_EnterCritical(uint32_t *sr);
+void PlumaOS_ExitCritical(uint32_t sr);
 
 #endif /* PLUMAOS_PLUMAOS_H_ */

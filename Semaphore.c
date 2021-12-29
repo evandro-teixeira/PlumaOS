@@ -62,10 +62,10 @@ PlumaOS_Sts_t Semaphore_Wait(PlumaOS_Handle_t semaphoreHandle /*, uint32_t milli
 
     if (0U != pSemStruct->semCount)
     {
-        //PlumaOS_EnterCritical(&regPrimask);
+        PlumaOS_EnterCritical(&regPrimask);
         pSemStruct->semCount--;
         pSemStruct->isWaiting = 0U;
-        //PlumaOS_ExitCritical(regPrimask);
+        PlumaOS_ExitCritical(regPrimask);
         return PlumaOS_Success;
     }
     return PlumaOS_Idle;
@@ -86,9 +86,9 @@ PlumaOS_Sts_t Semaphore_Post(PlumaOS_Handle_t semaphoreHandle)
     {
         return PlumaOS_Error;
     }
-    //PlumaOS_EnterCritical(&regPrimask);
+    PlumaOS_EnterCritical(&regPrimask);
     ++pSemStruct->semCount;
-    //PlumaOS_ExitCritical(regPrimask);
+    PlumaOS_ExitCritical(regPrimask);
 
     return PlumaOS_Success;
 }

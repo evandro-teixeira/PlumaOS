@@ -9,6 +9,7 @@
 #define PLUMAOS_EVENT_C_
 
 #include "Event.h"
+#include "PlumaOs.h"
 
 typedef struct Event
 {
@@ -52,9 +53,9 @@ PlumaOS_Sts_t Event_Set(PlumaOS_Handle_t eventHandle, event_flags_t flagsToSet)
     uint32_t regPrimask;
     pEventStruct = (event_t *)eventHandle;
     /* Set flags ensuring atomic operation */
-    //PlumaOS_EnterCritical(&regPrimask);
+    PlumaOS_EnterCritical(&regPrimask);
     pEventStruct->flags |= flagsToSet;
-    //PlumaOS_ExitCritical(regPrimask);
+    PlumaOS_ExitCritical(regPrimask);
 
     return PlumaOS_Success;
 }
@@ -72,9 +73,9 @@ PlumaOS_Sts_t Event_Clear(PlumaOS_Handle_t eventHandle, event_flags_t flagsToCle
     uint32_t regPrimask;
     pEventStruct = (event_t *)eventHandle;
     /* Clear flags ensuring atomic operation */
-    //PlumaOS_EnterCritical(&regPrimask);
+    PlumaOS_EnterCritical(&regPrimask);
     pEventStruct->flags &= ~flagsToClear;
-    //PlumaOS_ExitCritical(regPrimask);
+    PlumaOS_ExitCritical(regPrimask);
 
     return PlumaOS_Success;
 }
@@ -98,9 +99,9 @@ PlumaOS_Sts_t Event_Get(PlumaOS_Handle_t eventHandle, event_flags_t flagsMask, e
         return PlumaOS_Error;
     }
 
-    //PlumaOS_EnterCritical(&regPrimask);
+    PlumaOS_EnterCritical(&regPrimask);
     *pFlagsOfEvent = pEventStruct->flags & flagsMask;
-    //PlumaOS_ExitCritical(regPrimask);
+    PlumaOS_ExitCritical(regPrimask);
 
     return PlumaOS_Success;
 }
@@ -128,7 +129,7 @@ PlumaOS_Sts_t Event_Wait(PlumaOS_Handle_t eventHandle, event_flags_t flagsToWait
 
     pEventStruct = (event_t *)eventHandle;
 
-    //PlumaOS_EnterCritical(&regPrimask);
+    PlumaOS_EnterCritical(&regPrimask);
     *pSetFlags = pEventStruct->flags & flagsToWait;
 
     /* Check the event flag first, if does not meet wait condition, deal with timeout. */
@@ -141,7 +142,7 @@ PlumaOS_Sts_t Event_Wait(PlumaOS_Handle_t eventHandle, event_flags_t flagsToWait
         }
         retVal = PlumaOS_Success;
     }
-    //PlumaOS_ExitCritical(regPrimask);
+    PlumaOS_ExitCritical(regPrimask);
 
     return retVal;
 }

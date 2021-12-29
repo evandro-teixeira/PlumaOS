@@ -47,10 +47,10 @@ PlumaOS_Sts_t Mutex_Lock(PlumaOS_Handle_t mutexHandle)
 
     if (0U == pMutexStruct->isLocked)
     {
-        //PlumaOS_EnterCritical(&regPrimask);
+        PlumaOS_EnterCritical(&regPrimask);
         pMutexStruct->isLocked = 1U;
         pMutexStruct->isWaiting = 0U;
-        //PlumaOS_ExitCritical(regPrimask);
+        PlumaOS_ExitCritical(regPrimask);
         return PlumaOS_Success;
     }
     else return PlumaOS_Idle;
@@ -67,9 +67,9 @@ PlumaOS_Sts_t Mutex_Unlock(PlumaOS_Handle_t mutexHandle)
     mutex_t *pMutexStruct = (mutex_t *)mutexHandle;
     uint32_t regPrimask;
 
-    //PlumaOS_EnterCritical(&regPrimask);
+    PlumaOS_EnterCritical(&regPrimask);
     pMutexStruct->isLocked = 0U;
-    //PlumaOS_ExitCritical(regPrimask);
+    PlumaOS_ExitCritical(regPrimask);
     return PlumaOS_Success;
 }
 

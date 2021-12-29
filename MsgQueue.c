@@ -64,7 +64,7 @@ PlumaOS_Sts_t MsgQueue_Put(PlumaOS_Handle_t msgHandle, void *pMessage)
         return PlumaOS_Error;
     }
 
-    //PlumaOS_EnterCritical(&regPrimask);
+    PlumaOS_EnterCritical(&regPrimask);
     if (pQueue->number >= pQueue->max)
     {
         status = PlumaOS_Error;
@@ -85,7 +85,7 @@ PlumaOS_Sts_t MsgQueue_Put(PlumaOS_Handle_t msgHandle, void *pMessage)
             pQueue->tail = 0;
         }
     }
-    //PlumaOS_ExitCritical(regPrimask);
+    PlumaOS_ExitCritical(regPrimask);
     return status;
 }
 
@@ -110,7 +110,7 @@ PlumaOS_Sts_t MsgQueue_Get(PlumaOS_Handle_t msgHandle, void *pMessage)
         return PlumaOS_Error;
     }
 
-    //PlumaOS_EnterCritical(&regPrimask);
+    PlumaOS_EnterCritical(&regPrimask);
     if (0U != pQueue->number)
     {
         pMsgArray = (uint8_t *)pMessage;
@@ -129,7 +129,7 @@ PlumaOS_Sts_t MsgQueue_Get(PlumaOS_Handle_t msgHandle, void *pMessage)
         }
         status = PlumaOS_Success;
     }
-    //PlumaOS_ExitCritical(regPrimask);
+    PlumaOS_ExitCritical(regPrimask);
 
     return status;
 }
