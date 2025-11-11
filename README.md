@@ -58,10 +58,10 @@ int main(void) {
 
 ```c
 void MyTask(void) {
-    while(1) {
+//    while(1) {
         // Task code
         PlumaOS_TaskDelay(100);
-    }
+//    }
 }
 
 // Add task with priority
